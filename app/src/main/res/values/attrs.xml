@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ReViews">
+        <attr name="isMMSS" format="boolean" />
+        <attr name="second" format="integer" />
+    </declare-styleable>
+
+
+</resources>

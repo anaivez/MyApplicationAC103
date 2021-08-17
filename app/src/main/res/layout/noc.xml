@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@android:color/black"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bb"/>
+
+    <com.gdu.myapplicationac103.RTextView
+        android:layout_width="wrap_content"
+        android:textColor="@android:color/white"
+        android:id="@+id/rtv"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"/>
+
+    <com.gdu.myapplicationac103.allview.LeiDaView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <com.gdu.myapplicationac103.allview.LoadingView
+        android:id="@+id/lv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.KeepBtton
+        android:id="@+id/keep"
+        android:layout_width="334dp"
+        android:visibility="gone"
+        android:layout_height="377dp"
+        android:layout_centerVertical="true" />
+
+    <com.gdu.myapplicationac103.allview.LoadingView
+        android:id="@+id/lv2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:max="10"
+        android:visibility="gone" />
+
+
+    <com.gdu.myapplicationac103.allview.KeepBttonV2
+        android:layout_width="400dp"
+        android:layout_alignParentRight="true"
+        android:layout_height="400dp"
+        android:layout_marginLeft="180dp" />
+
+    <com.gdu.myapplicationac103.allview.CatchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.HistogramViewV3
+        android:layout_width="460dp"
+        android:layout_height="250dp"
+        android:id="@+id/hv2"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" />
+</RelativeLayout>

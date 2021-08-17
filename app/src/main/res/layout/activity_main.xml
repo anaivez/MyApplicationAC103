@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <com.gdu.myapplicationac103.allview.TableView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dxdx"
+        android:layout_marginTop="100dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dxdx"
+        android:text="22"/>
+
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="FAQ"
+        android:textColor="@android:color/black"
+        android:textSize="35sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.WatchView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
+
+    <com.gdu.myapplicationac103.allview.ResetView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+
+    <com.gdu.myapplicationac103.allview.ZXView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="100dp"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.TimeCount
+        android:id="@+id/tvNoName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="get code"
+        android:textSize="36sp" />
+
+
+    <com.gdu.myapplicationac103.allview.LongView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:visibility="gone" />
+
+
+    <com.gdu.myapplicationac103.allview.HistogramView
+        android:id="@+id/hv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:visibility="gone" />
+
+
+    <com.gdu.myapplicationac103.allview.ReView
+        android:id="@+id/rv"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        app:isMMSS="false"
+        app:second="63" />
+
+
+    <com.gdu.myapplicationac103.allview.TSView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.PathView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.LinesView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.CardView
+        android:layout_width="250dp"
+        android:layout_height="350dp"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.RView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone" />
+
+    <com.gdu.myapplicationac103.allview.RViewTouch
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onTimeClick" />
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onTimeClick" />
+
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onTimeClick" />
+    </LinearLayout>
+
+    <com.gdu.myapplicationac103.allview.NumEditTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:inputType="number"
+        android:visibility="gone" />
+
+    <ViewStub
+        android:id="@+id/vsRain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/activity_rain" />
+</RelativeLayout>

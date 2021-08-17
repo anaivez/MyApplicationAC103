@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/noname"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/boxing_gray"
+    android:onClick="onClick"
+    android:orientation="vertical">
+
+    <com.gdu.myapplicationac103.allview.SwitchView
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true" />
+
+    <com.gdu.myapplicationac103.allview.TwistedView
+        android:layout_width="160dp"
+        android:visibility="gone"
+        android:layout_height="240dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:format24Hour="yyyy:mm:dd:HH:mm:ss:SSS"
+        android:format12Hour="yyyy:mm:dd:HH:mm:ss:SSS"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"/>
+
+
+    <AnalogClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.gdu.myapplicationac103.allview.RormuView
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="30dp" />
+</RelativeLayout>
