@@ -22,9 +22,36 @@ import java.util.ArrayList;
  */
 public class ADS extends AppCompatActivity {
 
+    private static final String TAG = "ADS";
+    public Handler serialPostHandler = new Handler();
     ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1f);
     int i = 0;
     TextView tv;
+    Runnable sendRun = new Runnable() {
+        @Override
+        public void run() {
+            synchronized (this) {
+                boolean b = isServiceRunning(getApplicationContext(), "YzService");
+                Log.d(TAG, "run: " + b);
+            }
+            serialPostHandler.postDelayed(this, 100 * 10);
+        }
+    };
+
+    public static boolean isServiceRunning(Context context, String ServiceName) {
+        if (TextUtils.isEmpty(ServiceName)) {
+            return false;
+        }
+        ActivityManager myManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(1000);
+        for (int i = 0; i < runningService.size(); i++) {
+            Log.i("服务运行1：", "" + runningService.get(i).service.getShortClassName().replace(".", "").trim());
+            if (runningService.get(i).service.getShortClassName().replace(".", "").trim().equals(ServiceName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,33 +74,5 @@ public class ADS extends AppCompatActivity {
 
     public void onClick(View view) {
         sendRun.run();
-    }
-
-    private static final String TAG = "ADS";
-
-    public Handler serialPostHandler = new Handler();
-    Runnable sendRun = new Runnable() {
-        @Override
-        public void run() {
-            synchronized (this) {
-    boolean b=     isServiceRunning(getApplicationContext(),"YzService");
-                Log.d(TAG, "run: "+b);
-            }
-            serialPostHandler.postDelayed(this, 100*10);
-        }
-    };
-    public static boolean isServiceRunning(Context context, String ServiceName) {
-        if (TextUtils.isEmpty(ServiceName)) {
-            return false;
-        }
-        ActivityManager myManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(1000);
-        for (int i = 0; i < runningService.size(); i++) {
-            Log.i("服务运行1：", "" + runningService.get(i).service.getShortClassName().replace(".","").trim());
-            if (runningService.get(i).service.getShortClassName().replace(".","").trim().equals(ServiceName)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

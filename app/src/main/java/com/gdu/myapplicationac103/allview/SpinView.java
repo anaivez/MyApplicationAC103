@@ -56,7 +56,6 @@ public class SpinView extends View {
                 if (ang > 360) {
                     ang = 0;
                 }
-                Log.d("WYZ", "onAnimationUpdate: " + ang);
                 invalidate();
             }
         });
@@ -141,6 +140,7 @@ float width,height;
         whitePaint.setColor(Color.WHITE);
         whitePaint.setStyle(Paint.Style.STROKE);
         whitePaint.setStrokeWidth(8);
+        whitePaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
 }

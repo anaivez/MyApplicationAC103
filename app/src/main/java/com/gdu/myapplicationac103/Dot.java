@@ -2,8 +2,12 @@ package com.gdu.myapplicationac103;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.hardware.input.InputManager;
 import android.os.Build;
@@ -11,6 +15,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -44,6 +49,7 @@ public class Dot extends Service implements View.OnClickListener, View.OnTouchLi
     private static RelativeLayout roundLayout;
     private static LinearLayout mFloatLayout;
     private static MainActivity mainActivity;
+    public Handler serialPostHandler = new Handler();
     boolean isMove;
     WindowManager mWindowManagers = null;
     WindowManager.LayoutParams wmParamss;
@@ -88,7 +94,22 @@ public class Dot extends Service implements View.OnClickListener, View.OnTouchLi
                 tv.setText(speed);
             }
             //打印你所需要的网速值，单位默认为kb/s
-            Log.i(TAG, "current net speed  = " + speed);
+            //Log.i(TAG, "current net speed  = " + speed);
+        }
+    };
+    boolean isShow = false;
+    Runnable sendRun = new Runnable() {
+        @Override
+        public void run() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                boolean canDrawOverlays = Settings.canDrawOverlays(getApplicationContext());
+                if (canDrawOverlays) {
+                    createFloatImageView();
+                } else {
+                    serialPostHandler.postDelayed(this, 100 * 10);
+                }
+                Log.d(TAG, "run  canDrawOverlays: " + canDrawOverlays);
+            }
         }
     };
     private ImageView sub_iv;
@@ -106,6 +127,7 @@ public class Dot extends Service implements View.OnClickListener, View.OnTouchLi
     @Override
     public void onCreate() {
         super.onCreate();
+        createNotificationChannel();
         initData();
     }
 
@@ -114,11 +136,61 @@ public class Dot extends Service implements View.OnClickListener, View.OnTouchLi
         mNetSpeedTimer = new NetSpeedTimer(this, new NetSpeed(), handler).setDelayTime(1000).setPeriodTime(2000);
         //在想要开始执行的地方调用该段代码
         mNetSpeedTimer.startSpeedTimer();
-        createFloatImageView();
+        Log.d(TAG, "initData: " + Build.VERSION.SDK_INT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            boolean canDrawOverlays = Settings.canDrawOverlays(getApplicationContext());
+            Log.d(TAG, "initData   canDrawOverlays : " + canDrawOverlays);
+            if (canDrawOverlays) {
+                createFloatImageView();
+            } else {
+                sendRun.run();
+            }
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            // 通知渠道的id
+            String id = "my_channel_01";
+            // 用户可以看到的通知渠道的名字.
+            CharSequence name = getString(R.string.app_name);
+//         用户可以看到的通知渠道的描述
+            String description = getString(R.string.app_name);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = null;
+            mChannel = new NotificationChannel(id, name, importance);
+//         配置通知渠道的属性
+            mChannel.setDescription(description);
+//         设置通知出现时的闪灯（如果 android 设备支持的话）
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+//         设置通知出现时的震动（如果 android 设备支持的话）
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+//         最后在notificationmanager中创建该通知渠道 //
+            mNotificationManager.createNotificationChannel(mChannel);
+
+            // 为该通知设置一个id
+            int notifyID = 1;
+            // 通知渠道的id
+            String CHANNEL_ID = "my_channel_01";
+            // Create a notification and set the notification channel.
+            Notification notification = new Notification.Builder(this)
+                    .setContentTitle("New Message").setContentText("You've received new messages.")
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setChannelId(CHANNEL_ID)
+                    .build();
+            startForeground(1, notification);
+        }
     }
 
     //创建圆点菜单
     private void createFloatImageView() {
+        if (isShow) {
+            return;
+        }
+        isShow = true;
         //获取的是WindowManagerImpl.CompatModeWrapper
         mWindowManagers = (WindowManager) getApplication().getSystemService(getApplication().WINDOW_SERVICE);
         wmParamss = new WindowManager.LayoutParams();
@@ -130,7 +202,7 @@ public class Dot extends Service implements View.OnClickListener, View.OnTouchLi
         }
         wmParamss.format = PixelFormat.RGBA_8888;//设置图片格式，效果为背景透明
         wmParamss.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        wmParamss.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT; //调整悬浮窗显示位置
+        wmParamss.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT; //调整悬浮窗显示位置
         wmParamss.width = WRAP_CONTENT;
         wmParamss.height = WRAP_CONTENT;
         LayoutInflater inflater = LayoutInflater.from(getApplication());
@@ -152,6 +224,10 @@ public class Dot extends Service implements View.OnClickListener, View.OnTouchLi
 
     @Override
     public void onClick(View view) {
+
+    }
+
+    private void onUmbrella(){
 
     }
 

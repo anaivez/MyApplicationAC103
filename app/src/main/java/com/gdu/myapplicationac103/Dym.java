@@ -56,7 +56,6 @@ public class Dym extends BC {
             }
         }
     };
-
     LoadingView loadingView;
     SeekBar seekBar;
     int i = 0;
@@ -68,7 +67,22 @@ public class Dym extends BC {
     RTextView rtv;
     float x, y;
     List<Map<String, Float>> list = new ArrayList<>();
-    List<List<Map<String, Float>>> history=new ArrayList<>();
+    List<List<Map<String, Float>>> history = new ArrayList<>();
+    public Handler serialPostHandler = new Handler();
+    Runnable sendRun = new Runnable() {
+        @Override
+        public void run() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                boolean canDrawOverlays = Settings.canDrawOverlays(getContext());
+                if (canDrawOverlays) {
+                    Intent intent = new Intent(getContext(), Dot.class);
+                    startService(intent);
+                }
+                Log.d(TAG, "run  canDrawOverlays: " + canDrawOverlays);
+            }
+            serialPostHandler.postDelayed(this, 100 * 10);
+        }
+    };
     private MyUsbBroad myUsb;
     private WifiManager wifiManager;
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -86,18 +100,6 @@ public class Dym extends BC {
             Log.d(TAG, "onReceive: " + sb.toString());
         }
     };
-
-    public static boolean checkPermission(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && !Settings.canDrawOverlays(activity)) {
-            Toast.makeText(activity, "当前无权限，请授权", Toast.LENGTH_SHORT).show();
-            activity.startActivityForResult(
-                    new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                            Uri.parse("package:" + activity.getPackageName())), 0);
-            return false;
-        }
-        return true;
-    }
 
     public static void onActivityResult(Activity activity,
                                         int requestCode,
@@ -118,6 +120,18 @@ public class Dym extends BC {
         }
     }
 
+    public boolean checkPermission(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !Settings.canDrawOverlays(activity)) {
+            Toast.makeText(activity, "当前无权限，请授权", Toast.LENGTH_SHORT).show();
+            activity.startActivityForResult(
+                    new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            Uri.parse("package:" + activity.getPackageName())), 0);
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @param savedInstanceState
      */
@@ -126,6 +140,11 @@ public class Dym extends BC {
         super.onCreate(savedInstanceState);
         //Debug.startMethodTracing("app_trace");
         setContentView(R.layout.noc);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(new Intent().setClass(this, Dot.class));
+        }
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         registerReceiver(broadcastReceiver, filter);
@@ -194,10 +213,15 @@ public class Dym extends BC {
         findViewById(R.id.bb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                startActivityForResult(
+                        new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + getPackageName())), 0);
+
+                //Intent intent = new Intent();
                 //包名 包名+类名（全路径）
-                intent.setClassName("com.softwinner.fireplayer", "com.softwinner.fireplayer.ui.FourKMainActivity");
-                startActivity(intent);
+                //intent.setClassName("com.softwinner.fireplayer", "com.softwinner.fireplayer.ui.FourKMainActivity");
+                //startActivity(intent);
+
                 //new Thread(new Runnable() {
                 //    @Override
                 //    public void run() {
@@ -247,15 +271,6 @@ public class Dym extends BC {
             }
         });
         histogramViewV2.setDatas(new Float[]{1f, 2.5f, 4f, 5.5f, 7f, 8.5f, 10f, 11.5f, 13f, 15f});
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Settings.canDrawOverlays(this)) {
-                Intent intent = new Intent(this, Dot.class);
-                startService(intent);
-                Log.d(TAG, "onActivityResult: 启动DOT");
-            } else {
-                Toast.makeText(this, "ACTION_MANAGE_OVERLAY_PERMISSION权限已被拒绝", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private synchronized void buyTick(String user) {
@@ -319,8 +334,6 @@ public class Dym extends BC {
         if (requestCode == 100) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(this)) {
-                    Intent intent = new Intent(this, Dot.class);
-                    startService(intent);
                     Log.d(TAG, "onActivityResult: 启动DOT");
                 } else {
                     Toast.makeText(this, "ACTION_MANAGE_OVERLAY_PERMISSION权限已被拒绝", Toast.LENGTH_SHORT).show();
