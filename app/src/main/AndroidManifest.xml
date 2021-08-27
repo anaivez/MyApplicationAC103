@@ -60,6 +60,9 @@
             android:theme="@style/Theme.Design.NoActionBar">
 
         </activity>
+        <activity android:name=".BaishiActivity">
+
+        </activity>
         <activity android:name=".MillActivity">
 
         </activity>
@@ -112,6 +115,12 @@
                 <action android:name="com.video.server" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </service>
+        <service
+            android:name=".DCSService"
+            android:enabled="true"
+            android:exported="true">
+
         </service>
         <service
             android:name=".YzService"

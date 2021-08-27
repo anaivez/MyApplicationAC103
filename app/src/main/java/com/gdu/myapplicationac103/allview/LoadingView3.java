@@ -14,9 +14,11 @@ import android.util.AttributeSet;
  */
 public class LoadingView3 extends BaseView {
 
-    Paint paint;
-    float initialAArcStartAngle = 300, initialBArcStartAngle = 120,initialArcSweepAngle=120;
+    Paint paint, tPaint;
+    float initialAArcStartAngle = 300, initialBArcStartAngle = 120, initialArcSweepAngle = 120;
     ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1f);
+    boolean isRise = true;
+    int rate = 0;
 
     public LoadingView3(Context context) {
         super(context);
@@ -33,6 +35,11 @@ public class LoadingView3 extends BaseView {
         paint.setStrokeWidth(6f);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND);
+
+        tPaint = new Paint();
+        tPaint.setColor(Color.WHITE);
+        tPaint.setStrokeWidth(2f);
+        tPaint.setTextSize(18);
     }
 
     @Override
@@ -49,7 +56,7 @@ public class LoadingView3 extends BaseView {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    postInvalidate();
+                postInvalidate();
             }
         });
         valueAnimator.start();
@@ -58,53 +65,57 @@ public class LoadingView3 extends BaseView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        float sweepAngle = getArcSweepAngle();
         canvas.drawArc(
                 new RectF(4f, 4f, width - 4, height - 4),
                 getAArcStartAngle(),
-                getArcSweepAngle(),
+                sweepAngle,
                 false,
                 paint);
 
         canvas.drawArc(
                 new RectF(4f, 4f, width - 4, height - 4),
                 getBArcStartAngle(),
-                getArcSweepAngle(),
+                sweepAngle,
                 false,
                 paint);
-
+        canvas.drawText("" + getRate(), centreX, centreY, tPaint);
     }
 
     private float getAArcStartAngle() {
-        //initialAArcStartAngle+=(5+((120-initialArcSweepAngle)/20));
-        initialAArcStartAngle+=10;
-        if (initialAArcStartAngle>360) {
-            initialAArcStartAngle=0;
+        initialAArcStartAngle += getRate();
+        if (initialAArcStartAngle >= 360) {
+            initialAArcStartAngle = 0;
         }
         return initialAArcStartAngle;
     }
 
     private float getBArcStartAngle() {
-        //initialBArcStartAngle+=(5+((120-initialArcSweepAngle)/20));
-        initialBArcStartAngle+=10;
-        if (initialBArcStartAngle>360) {
-            initialBArcStartAngle=0;
+        initialBArcStartAngle = initialAArcStartAngle + 180;
+        if (initialAArcStartAngle >= 360) {
+            initialAArcStartAngle = initialAArcStartAngle % 360;
         }
 
         return initialBArcStartAngle;
     }
-    boolean isRise=true;
+
+    private int getRate() {
+        return 7 + rate;
+    }
+
     private float getArcSweepAngle() {
-        if (initialArcSweepAngle>=120) {
-            isRise=false;
+        if (initialArcSweepAngle >= 120) {
+            isRise = false;
         }
-        if (initialArcSweepAngle<=15) {
-            isRise=true;
+        if (initialArcSweepAngle <= 15) {
+            isRise = true;
         }
         if (isRise) {
             initialArcSweepAngle++;
-        }else{
+        } else {
             initialArcSweepAngle--;
         }
+        rate = (int) ((120-initialArcSweepAngle) / 20);
         return initialArcSweepAngle;
     }
 }

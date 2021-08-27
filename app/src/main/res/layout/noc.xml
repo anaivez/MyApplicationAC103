@@ -2,21 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/wallpaper6"
     android:layout_height="match_parent"
+    android:background="@drawable/wallpaper6"
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/bb"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bb"/>
+        android:layout_height="wrap_content" />
 
     <com.gdu.myapplicationac103.RTextView
-        android:layout_width="wrap_content"
-        android:textColor="@android:color/white"
         android:id="@+id/rtv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"/>
+        android:textColor="@android:color/white" />
 
     <com.gdu.myapplicationac103.allview.LeiDaView
         android:layout_width="match_parent"
@@ -34,9 +34,9 @@
     <com.gdu.myapplicationac103.allview.KeepBtton
         android:id="@+id/keep"
         android:layout_width="334dp"
-        android:visibility="gone"
         android:layout_height="377dp"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
 
     <com.gdu.myapplicationac103.allview.LoadingView
         android:id="@+id/lv2"
@@ -59,8 +59,8 @@
 
     <com.gdu.myapplicationac103.allview.KeepBttonV2
         android:layout_width="400dp"
-        android:layout_alignParentRight="true"
         android:layout_height="400dp"
+        android:layout_alignParentRight="true"
         android:layout_marginLeft="180dp" />
 
     <com.gdu.myapplicationac103.allview.CatchView
@@ -71,27 +71,66 @@
         android:visibility="gone" />
 
     <com.gdu.myapplicationac103.allview.HistogramViewV3
+        android:id="@+id/hv2"
         android:layout_width="460dp"
         android:layout_height="250dp"
-        android:id="@+id/hv2"
-        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="20dp"
+        android:visibility="gone" />
+
     <com.gdu.myapplicationac103.allview.SpinView
         android:layout_width="80dp"
-        android:layout_alignParentBottom="true"
-        android:layout_height="80dp"/>
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true" />
+
     <com.gdu.myapplicationac103.allview.LoadingView2
         android:layout_width="80dp"
-        android:layout_centerHorizontal="true"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="80dp"/>
-<com.gdu.myapplicationac103.allview.LoadingView3
-    android:layout_width="80dp"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:layout_height="80dp"/>
+        android:layout_centerHorizontal="true" />
 
+    <com.gdu.myapplicationac103.allview.LoadingView3
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+
+    <com.gdu.myapplicationac103.allview.DugoubissView
+        android:layout_width="280dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnA"
+            android:onClick="onClick"
+            android:layout_width="wrap_content"
+            android:text="add"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnB"
+            android:text="delete"
+            android:onClick="onClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnC"
+            android:onClick="onClick"
+            android:text="select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnD"
+            android:onClick="onClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </RelativeLayout>

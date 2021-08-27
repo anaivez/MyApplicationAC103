@@ -43,6 +43,7 @@ import java.util.Map;
 public class Dym extends BC {
 
     private static final String TAG = "Dym";
+    public Handler serialPostHandler = new Handler();
     TextView textView;
     RTextView rTextView;
     Handler hh = new Handler() {
@@ -68,7 +69,6 @@ public class Dym extends BC {
     float x, y;
     List<Map<String, Float>> list = new ArrayList<>();
     List<List<Map<String, Float>>> history = new ArrayList<>();
-    public Handler serialPostHandler = new Handler();
     Runnable sendRun = new Runnable() {
         @Override
         public void run() {
@@ -144,7 +144,6 @@ public class Dym extends BC {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(new Intent().setClass(this, Dot.class));
         }
-
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         registerReceiver(broadcastReceiver, filter);
@@ -373,6 +372,37 @@ public class Dym extends BC {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * "NAME varchar(20)," +
+     * "TIME integer," +
+     * "CALORIE integer," +
+     * "MILEAGE integer," +
+     * "AVG_VELOCITY integer,"+
+     * "CREATE_DATE interger
+     *
+     * @param view
+     */
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnA:
+               long id= SQLData.getInstance(getContext()).install();
+                Log.d(TAG, "onClick: "+id);
+                break;
+            case R.id.btnB:
+               boolean b= SQLData.getInstance(getContext()).del(1);
+                Log.d(TAG, "onClick: "+b);
+                break;
+            case R.id.btnC:
+                List<User> userList = SQLData.getInstance(getContext()).select();
+                for (User u : userList) {
+                    Log.d(TAG, "onClick: "+u.toString());
+                }
+                break;
+            case R.id.btnD:
+                break;
+        }
     }
 
     public interface OnWindowPermissionListener {

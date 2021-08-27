@@ -22,7 +22,9 @@ import com.gdu.myapplicationac103.allview.TimeCount;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BC implements View.OnTouchListener, ViewTreeObserver.OnTouchModeChangeListener {
 
@@ -35,7 +37,6 @@ public class MainActivity extends BC implements View.OnTouchListener, ViewTreeOb
     TimeCount timeCount;
     ImageView iv;
     ViewStub viewStub;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class MainActivity extends BC implements View.OnTouchListener, ViewTreeOb
         //timeCount = new TimeCount(1000 * 15, 1000, tvNoName, this);
         //timeCount.start();
         //create();
+
+
         try {
             Field[] f = TSBean.class.getDeclaredFields();
             String sql = "create table if not exists user1(" +
